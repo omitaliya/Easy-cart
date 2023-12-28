@@ -4,6 +4,8 @@ use App\Models\brand;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\homeController as home_page;
+use App\Http\Controllers\productSubCategory;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\brandController;
 use App\Http\Controllers\admin\productController;
@@ -11,7 +13,6 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
-use App\Http\Controllers\productSubCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +25,7 @@ use App\Http\Controllers\productSubCategory;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.login');
-});
+Route::get('/',[home_page::class,'index'])->name('home');
 
 
 Route::group(['prefix'=>'admin'],function()
@@ -67,7 +66,11 @@ Route::group(['prefix'=>'admin'],function()
             
             Route::get('product-index',[productController::class,'index'])->name('product.index');
             Route::get('product-create',[productController::class,'create'])->name('product.create');
+            Route::get('product-edit/{id}',[productController::class,'edit'])->name('product.edit');
+            Route::post('product-update/{id}',[productController::class,'update'])->name('product.update');
             Route::post('product-store',[productController::class,'store'])->name('product.store');
+            Route::get('product-delete/{id}',[productController::class,'delete'])->name('product.delete');
+            Route::get('product-delete-image/{id}',[productController::class,'deleteImage'])->name('product.deleteImage');
            
             Route::get('getSlug',function(Request $request){
                 $slug='';
