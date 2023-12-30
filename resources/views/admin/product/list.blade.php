@@ -55,7 +55,7 @@
                         </thead>
                         <tbody>
                             @forelse ($products as $pr)
-                            <tr>
+                            <tr class="{{ $pr->id }}">
                                 <td>{{ $loop->iteration }}</td>
                                 
                                 <td><img src="{{ asset('storage/'.$pr->images->first()->path) }}" class="img-thumbnail" width="50" ></td>
@@ -131,9 +131,10 @@
                 $.ajax({
                     url: newUrl,
                     type: "get",
-                    success: function()
+                    success: function(data)
                     {
-                        window.location.href="{{ route('product.index') }}";
+                        $(".text-success").text(data.message);
+                        $('.'+data.id).remove();
                     }
                 });
             }

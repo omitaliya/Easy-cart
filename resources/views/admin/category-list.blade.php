@@ -25,7 +25,7 @@
                 <div class="card-header">
 
                     @if(session()->has('success'))
-                    <p class="text-success ml-2 font-weight-bolder">{{ session()->get('success') }}</p>
+                            <p class="text-success">{{ session()->get('success') }}</p>
                     @endif
                     
                     <div class="card-tools">
@@ -56,7 +56,7 @@
                         <tbody>
 
                             @forelse ($categories as $cat)
-                            <tr>
+                            <tr class="{{ $cat->id }}">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $cat->name }}</td>
                                 <td>{{ $cat->slug }}</td>
@@ -114,8 +114,9 @@
                     url:newurl,
                     type:'post',
                     dataType:'json',
-                    success:function(response){
-                        window.location.href="{{ route('category.list') }}"
+                    success:function(data){
+                        $(".text-success").text(data.message);
+                        $('.'+data.id).remove();
                     }
                 });
             }

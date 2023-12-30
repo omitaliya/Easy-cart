@@ -39,7 +39,12 @@ class productController extends Controller
         $product->images->each->delete();
         $product->delete();
 
-        session()->flash('success','Product deleted successfully');
+
+        return response()->json([
+            'status'=>true,
+            'message'=>'Product deleted successfully',
+            'id'=>$id
+        ]);
     }
 
     function edit($id)
@@ -87,7 +92,7 @@ class productController extends Controller
             $product->brand_id=$data->brand;
             $product->status=$data->status;
             $product->is_featured=$data->is_featured;
-            $product->track_qty=$data->track_qty;
+            $product->track_qty=$data->track_qty ? 1: 0;
             $product->qty=$data->qty;
             $product->save();
 
@@ -128,12 +133,12 @@ class productController extends Controller
 
         $rules=[
             'title' =>'required',
-            'slug' =>'required|unique',
+            'slug' =>'required|unique:products,slug',
             'description' =>'required',
             'price' =>'required|numeric',
             'compare_price' =>'nullable|numeric',
             'image' =>'required',
-            'sku'=>'required|unique',
+            'sku'=>'required|unique:products,sku',
             'category' =>'required',
         ];
 
@@ -159,7 +164,7 @@ class productController extends Controller
             $product->brand_id=$data->brand;
             $product->status=$data->status;
             $product->is_featured=$data->is_featured;
-            $product->track_qty=$data->track_qty;
+            $product->track_qty=$data->track_qty ? 1:0;
             $product->qty=$data->qty;
             $product->save();
 
@@ -199,8 +204,9 @@ class productController extends Controller
 
         $img->delete();
 
-        session()->flash('success','Image deleted successfully');
-
-        return redirect()->back();
+        return response()->json([
+            'message'=>'Image deleted successfully',
+            'id'=>$img->id
+        ]);
     }
 }

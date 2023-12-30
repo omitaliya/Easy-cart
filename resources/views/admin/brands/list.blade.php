@@ -23,9 +23,9 @@
         <div class="card">
             <div class="card-header">
 
-                @if (session()->has('success'))
-                    <p class="text-success">{{ session()->get('success') }}</p>
-                @endif
+                @if(session()->has('success'))
+                <p class="text-success">{{ session()->get('success') }}</p>
+        @endif
 
                 <div class="card-tools">
                     <form method="get">
@@ -55,7 +55,7 @@
                     </thead>
                     <tbody>
                         @forelse ($brand as $b)
-                        <tr>
+                        <tr class="{{ $b->id }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $b->name }}</td>
                             <td>{{ $b->slug }}</td>
@@ -118,9 +118,10 @@
     
                     url:newUrl,
                     type:'get',
-                    success:function()
+                    success:function(data)
                     {
-                        window.location.href = '{{ route("brand.index") }}';
+                        $(".text-success").text(data.message);
+                        $('.'+data.id).remove();
                     }
                 });
             }

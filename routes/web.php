@@ -13,6 +13,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\shopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ use App\Http\Controllers\admin\SubCategoryController;
 
 Route::get('/',[home_page::class,'index'])->name('home');
 
+Route::get('/shop/{CategorySlug?}/{SubCategorySlug?}',[shopController::class,'index'])->name('shop');
 
 Route::group(['prefix'=>'admin'],function()
 {

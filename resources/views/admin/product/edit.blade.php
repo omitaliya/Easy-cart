@@ -60,9 +60,9 @@
                             <input type="file" multiple accept="image/*" name="image[]" class="form-control">
                             
                             @forelse ($product->images as $img)
-                            <img src="{{ asset('storage/'.$img->path) }}" class="img-thumbnail" width="50" >
+                            <img src="{{ asset('storage/'.$img->path) }}" class="img-thumbnail {{ $img->id }}" width="50" >
                                 
-                                <a href="{{ route('product.deleteImage',$img->id) }}" class="text-danger">Remove</a>
+                                <a href="javascript:void(0)" onclick="deleteImage({{ $img->id }})" class="text-danger {{ $img->id }}">Remove</a>
                             @empty
                                {{  "No Images Uoloaded" }}
                             @endforelse
@@ -152,7 +152,7 @@
                             <div class="mb-3">
                                 <label for="category">Sub category</label>
                                 <select name="sub_category" id="sub_category" class="form-control">
-                                    <option selected>Select Sub Category</option>
+                                    <option disabled selected>Select Sub Category</option>
                                     @if (!empty($sub_category))
                                         @foreach ($sub_category as $sb)
                                             <option {{ ($product->sub_category_id==$sb->id)?'selected' :'' }} value="{{ $sb->id }}">{{ $sb->name }}</option>
@@ -205,6 +205,28 @@
 @section('js')
     
 <script>
+
+
+    function deleteImage(id)
+    {
+        var url="{{ route('product.deleteImage','id')}}";
+        var newUrl=url.replace('id',id);
+
+        if(confirm('Are you sure you want to delete ?'))
+        {
+            $.ajax({
+
+                type:'get',
+                url:newUrl,
+                success:function(data)
+                {
+                    $(".text.success").text(data.message);
+                    $('.'+data.id).remove();
+                }
+
+            });
+        }
+    }
 
     $("#productForm").submit(function(e) {
         e.preventDefault();

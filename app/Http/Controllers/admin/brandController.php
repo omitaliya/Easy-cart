@@ -60,7 +60,11 @@ class brandController extends Controller
     function delete($id)
     {
         $delete=brand::find($id)->delete();
-        session()->flash('success','Brand was successfully deleted');
+        return response()->json([
+            'status'=>true,
+            'message'=>'Brand was successfully deleted',
+            'id'=>$id
+        ]);
     }
 
     function edit($id)

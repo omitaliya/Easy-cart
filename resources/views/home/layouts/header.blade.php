@@ -99,19 +99,24 @@
 						@foreach (getCategory() as $cat)
 
 						<li class="nav-item dropdown">
-							<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
-								aria-expanded="false">
-								{{ $cat->name }}
-							</button>
+							@if ($cat->sub_category->isNotEmpty())
+								<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
+									aria-expanded="false">
+									{{ $cat->name }}
+								</button>
+							@else
+								<a class="btn btn-dark " href="#">{{ $cat->name }}</a>
+							@endif
+
 
 							<ul class="dropdown-menu dropdown-menu-dark">
 								@foreach ($cat->sub_category as $sub_cat)
 								<li><a class="dropdown-item nav-link" href="#">{{ $sub_cat->name }}</a></li>
 								@endforeach
 							</ul>
-						</li>
-						@endforeach
-						@endif
+							</li>
+							@endforeach
+							@endif
 
 					</ul>
 				</div>

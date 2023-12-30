@@ -31,6 +31,7 @@
 						<li><a href="#" title="Sell">Login</a></li>
 						<li><a href="#" title="Advertise">Register</a></li>
 						<li><a href="#" title="Contact Us">My Orders</a></li>						
+						<li><a href="{{ route('shop') }}" title="Contact Us">Shop</a></li>						
 					</ul>
 				</div>
 			</div>			
@@ -68,5 +69,6 @@ function myFunction() {
   }
 }
 </script>
+@yield('js')
 </body>
 </html>

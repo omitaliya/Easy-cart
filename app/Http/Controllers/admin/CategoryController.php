@@ -127,8 +127,13 @@ class CategoryController extends Controller
         }else
         {
 
-            session()->flash('success','Successfully deleted');
             $delete_id->delete();
+
+            return response()->json([
+                'status'=>true,
+                'message'=>'Successfully deleted',
+                'id'=>$id
+            ]);
         }
         
 

@@ -25,7 +25,7 @@
 
                 @if(session()->has('success'))
                 <p class="text-success">{{ session()->get('success') }}</p>
-                @endif
+        @endif
 
                 <div class="card-tools">
                     <form action="" method="get">
@@ -56,13 +56,14 @@
                     </thead>
                     <tbody>
                         @forelse ($sub_category as $sub_cat)
-                        <tr>
+                        <tr class="{{ $sub_cat->id }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $sub_cat->name }}</td>
                             <td>{{ $sub_cat->slug }}</td>
                             <td>@foreach ($sub_cat->category as $c)
                                 {{ $c->name }}
                             @endforeach</td>
+                            <td>
                             <td>
                                 @if ($sub_cat->status == 1)
                                     
@@ -120,9 +121,10 @@
     
                     url:newUrl,
                     type:'get',
-                    success:function()
+                    success:function(data)
                     {
-                        window.location.href = '{{ route("sub-category.index") }}';
+                        $(".text-success").text(data.message);
+                        $('.'+data.id).remove();
                     }
                 });
             }

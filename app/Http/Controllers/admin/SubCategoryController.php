@@ -117,9 +117,12 @@ class SubCategoryController extends Controller
     function delete($id)
     {
         $sub_cat=sub_categories::find($id);
-        $sub_cat->delete();
-
-        session()->flash('success','category deleted successfully');
+        $sub_cat->delete(); 
+        return response()->json([
+            'status'=>true,
+            'message'=>'Sub Category deleted successfully',
+            'id'=>$id
+        ]);
     }
 
 
