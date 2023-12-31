@@ -222,7 +222,7 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="" class="product-img"><img class="card-img-top" src="{{ asset('storage/'.$fp->images->first()->path) }}" alt=""></a>
+                            <a href="{{ route('product',$fp->id) }}" class="product-img"><img class="card-img-top" src="{{ asset('storage/'.$fp->images->first()->path) }}" alt=""></a>
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
@@ -232,10 +232,11 @@
                             </div>
                         </div>                        
                         <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="product.php">{{ $fp->name }}</a>
+                            <a class="h6 link" href="{{ route('product',$fp->id) }}">{{ $fp->name }}</a>
                             <div class="price mt-2">
                                 <span class="h5"><strong>{{ '₹'.$fp->price }}</strong></span>
-                                <span class="h6 text-underline text-danger"><del>{{ '₹'.$fp->compare_price ?? '' }}</del></span>
+                                <span class="h6 text-underline text-danger"><del>{{ ($fp->compare_price!=null) ? '₹'.$fp->compare_price :''
+                                }}</del></span>
                             </div>
                         </div>                        
                     </div>                                               
@@ -261,16 +262,17 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
+                                <a class="btn btn-dark" href="{{ route('product',$lp->id) }}">
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>
                         </div>                        
                         <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="product.php">{{ $lp->name }}</a>
+                            <a class="h6 link" href="{{ route('product',$lp->id) }}">{{ $lp->name }}</a>
                             <div class="price mt-2">
                                 <span class="h5"><strong>{{ '₹'.$lp->price }}</strong></span>
-                                <span class="h6 text-underline text-danger"><del>{{ '₹'.$lp->compare_price ?? ''}}</del></span>
+                                <span class="h6 text-underline text-danger"><del>{{ ($lp->compare_price!=null) ? '₹'.$lp->compare_price :''
+                                }}</del></span>
                             </div>
                         </div>                        
                     </div>                                               

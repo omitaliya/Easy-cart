@@ -138,7 +138,7 @@
                         <div class="col-md-4 product">
                             <div class="card product-card">
                                 <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top"
+                                    <a href="{{ route('product',$pr->id) }}" class="product-img"><img class="card-img-top"
                                             src="{{ asset('storage/'.$pr->images->first()->path) }}" alt=""></a>
                                     <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
 
@@ -149,10 +149,10 @@
                                     </div>
                                 </div>
                                 <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">{{ $pr->title }}</a>
+                                    <a class="h6 link" href="{{ route('product',$pr->id) }}">{{ $pr->title }}</a>
                                     <div class="price mt-2">
                                         <span class="h5"><strong>{{ '₹'.$pr->price }}</strong></span>
-                                        <span class="h6 text-underline text-danger"><del>{{ '₹'.$pr->compare_price ?? ''
+                                        <span class="h6 text-underline text-danger"><del>{{ ($pr->compare_price!=null) ? '₹'.$pr->compare_price :''
                                                 }}</del></span>
                                     </div>
                                 </div>

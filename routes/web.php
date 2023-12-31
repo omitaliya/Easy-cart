@@ -4,7 +4,7 @@ use App\Models\brand;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\homeController as home_page;
+use App\Http\Controllers\shopController;
 use App\Http\Controllers\productSubCategory;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\brandController;
@@ -13,7 +13,8 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
-use App\Http\Controllers\shopController;
+use App\Http\Controllers\homeController as home_page;
+use App\Http\Controllers\productController as product_home;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ use App\Http\Controllers\shopController;
 Route::get('/',[home_page::class,'index'])->name('home');
 
 Route::get('/shop/{CategorySlug?}/{SubCategorySlug?}',[shopController::class,'index'])->name('shop');
+Route::get('/product/{id}',[product_home::class,'index'])->name('product');
 
 Route::group(['prefix'=>'admin'],function()
 {

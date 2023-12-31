@@ -105,13 +105,13 @@
 									{{ $cat->name }}
 								</button>
 							@else
-								<a class="btn btn-dark " href="#">{{ $cat->name }}</a>
+								<a class="btn btn-dark " href="{{ route('shop',$cat->slug) }}">{{ $cat->name }}</a>
 							@endif
 
 
 							<ul class="dropdown-menu dropdown-menu-dark">
 								@foreach ($cat->sub_category as $sub_cat)
-								<li><a class="dropdown-item nav-link" href="#">{{ $sub_cat->name }}</a></li>
+								<li><a class="dropdown-item nav-link" href="{{ route('shop',[$cat->slug,$sub_cat->slug]) }}">{{ $sub_cat->name }}</a></li>
 								@endforeach
 							</ul>
 							</li>
