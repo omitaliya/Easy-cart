@@ -226,7 +226,8 @@
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
+                                <a class="btn btn-dark" href="javascript:void(0)"
+                                onclick="addToCart({{ $fp->id }})">
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>
@@ -258,11 +259,12 @@
                 <div class="col-md-3">
                     <div class="card product-card">
                         <div class="product-image position-relative">
-                            <a href="" class="product-img"><img class="card-img-top" src="{{ asset('storage/'.$lp->images->first()->path) }}" alt=""></a>
+                            <a href="{{ route('product',$lp->id) }}" class="product-img"><img class="card-img-top" src="{{ asset('storage/'.$lp->images->first()->path) }}" alt=""></a>
                             <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="{{ route('product',$lp->id) }}">
+                                <a class="btn btn-dark" href="javascript:void(0)"
+                                onclick="addToCart({{ $lp->id }})">
                                     <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>                            
                             </div>

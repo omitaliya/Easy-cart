@@ -74,7 +74,8 @@
                             @foreach (brand() as $br)
 
                             <div class="form-check mb-2">
-                                <input class="form-check-input brand" type="checkbox" value="{{ $br->id }}" onchange="getBrand()" id="flexCheckDefault">
+                                <input class="form-check-input brand" type="checkbox" value="{{ $br->id }}"
+                                    onchange="getBrand()" id="flexCheckDefault">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     {{ $br->name }}
                                 </label>
@@ -117,7 +118,7 @@
                         </div>
                     </div> --}}
                 </div>
-                
+
                 <div class="col-md-9">
                     <div class="row pb-3" id="product-container">
                         <div class="col-12 pb-1">
@@ -138,12 +139,14 @@
                         <div class="col-md-4 product">
                             <div class="card product-card">
                                 <div class="product-image position-relative">
-                                    <a href="{{ route('product',$pr->id) }}" class="product-img"><img class="card-img-top"
+                                    <a href="{{ route('product',$pr->id) }}" class="product-img"><img
+                                            class="card-img-top"
                                             src="{{ asset('storage/'.$pr->images->first()->path) }}" alt=""></a>
                                     <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
 
                                     <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
+                                        <a class="btn btn-dark" href="javascript:void(0)"
+                                            onclick="addToCart({{ $pr->id }})">
                                             <i class="fa fa-shopping-cart"></i> Add To Cart
                                         </a>
                                     </div>
@@ -152,7 +155,8 @@
                                     <a class="h6 link" href="{{ route('product',$pr->id) }}">{{ $pr->title }}</a>
                                     <div class="price mt-2">
                                         <span class="h5"><strong>{{ '₹'.$pr->price }}</strong></span>
-                                        <span class="h6 text-underline text-danger"><del>{{ ($pr->compare_price!=null) ? '₹'.$pr->compare_price :''
+                                        <span class="h6 text-underline text-danger"><del>{{ ($pr->compare_price!=null) ?
+                                                '₹'.$pr->compare_price :''
                                                 }}</del></span>
                                     </div>
                                 </div>
@@ -165,7 +169,7 @@
                         <div class="col-md-12 pt-5">
                             <nav aria-label="Page navigation example">
                                 {{ $product->links() }}
-                                
+
                             </nav>
                         </div>
                     </div>
@@ -182,7 +186,7 @@
 @section('js')
 
 <script>
-
+   
 $("#sort").change(function(){
 
         var url='{{ url()->current() }}?';
@@ -257,6 +261,5 @@ $.ajax({
 
 
 </script>
-    
-@endsection
 
+@endsection

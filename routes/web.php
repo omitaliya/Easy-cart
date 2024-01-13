@@ -13,6 +13,8 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\authController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\homeController as home_page;
 use App\Http\Controllers\productController as product_home;
 
@@ -31,6 +33,25 @@ Route::get('/',[home_page::class,'index'])->name('home');
 
 Route::get('/shop/{CategorySlug?}/{SubCategorySlug?}',[shopController::class,'index'])->name('shop');
 Route::get('/product/{id}',[product_home::class,'index'])->name('product');
+Route::post('/addToCart',[CartController::class,'addToCart'])->name('addToCart');
+Route::get('/cart',[CartController::class,'cart'])->name('cart');
+Route::post('/updateCart',[CartController::class,'updateCart'])->name('updateCart');
+Route::post('/deleteCart',[CartController::class,'deleteCart'])->name('deleteCart');
+
+Route::group(['prefix'=>'account','middleware'=>'guest'],function()
+{
+    Route::get('/register',[authController::class,'registration'])->name('register');
+    Route::post('/registerData',[authController::class,'registerData'])->name('registerData');
+    Route::get('/login',[authController::class,'login'])->name('login');
+    Route::post('/login/user',[authController::class,'loginUser'])->name('login.user');
+});
+
+Route::group(['middleware'=>'auth'],function()
+{
+    Route::get('/logout',[authController::class,'logout'])->name('logout');
+    Route::get('/myprofile',[authController::class,'myprofile'])->name('myprofile');
+    Route::get('/changePassword',[authController::class,'changePassword'])->name('changePassword');
+});
 
 Route::group(['prefix'=>'admin'],function()
 {

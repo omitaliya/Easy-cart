@@ -1,9 +1,18 @@
 <?php
 
+
 use App\Models\brand;
 use App\Models\Category;
 use App\Models\product;
 
+function message($class,$msg)
+{
+    $cls='add'.$class;
+    notyf()
+    ->position('x', 'center')
+    ->position('y', 'bottom') 
+    ->$cls($msg);
+}
 function getCategory()
 {
     return Category::with('sub_category')->where('status', 1)->orderBy('name','ASC')->get();
