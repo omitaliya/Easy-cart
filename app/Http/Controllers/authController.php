@@ -47,6 +47,8 @@ class authController extends Controller
         {
             if(Auth::attempt(['email'=>$data->email,'password'=>$data->password]))
             {
+               
+
                 message('success','You are Logged In');
                 return response()->json([
                     'status'=>'success',

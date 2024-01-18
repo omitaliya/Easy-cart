@@ -39,12 +39,12 @@
                                     <input type="text" name="phone" value="{{ Auth::user()->phone }}" id="phone" placeholder="Enter Your Phone" class="form-control">
                                 </div>
 
-                                <div class="mb-3">                                    
+                                {{-- <div class="mb-3">                                    
                                     <label for="phone">Address</label>
                                     <textarea name="address" id="address" class="form-control" cols="30" rows="5" placeholder="Enter Your Address">
-                                        {{-- {{ Auth::user()->address }} --}}
+                                        {{ Auth::user()->address }}
                                     </textarea>
-                                </div>
+                                </div> --}}
 
                                 <div class="d-flex">
                                     <button class="btn btn-dark">Update</button>

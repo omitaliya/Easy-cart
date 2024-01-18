@@ -89,7 +89,7 @@
                             <div><p id="total">{{ '₹'.Cart::total() }}</p></div>
                         </div>
                         <div class="pt-5">
-                            <a href="#" class="btn-dark btn btn-block w-100">Proceed to Checkout</a>
+                            <a href="{{ route('checkout') }}" class="btn-dark btn btn-block w-100">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>     

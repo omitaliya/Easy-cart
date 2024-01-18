@@ -149,7 +149,3 @@
 </main>
 
 @endsection
-
-@section('js')
-
-@endsection

@@ -3,8 +3,12 @@
 use App\Models\brand;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\address;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\authController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\shopController;
+use App\Http\Controllers\orderController;
 use App\Http\Controllers\productSubCategory;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\brandController;
@@ -13,8 +17,6 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
-use App\Http\Controllers\authController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\homeController as home_page;
 use App\Http\Controllers\productController as product_home;
 
@@ -48,6 +50,9 @@ Route::group(['prefix'=>'account','middleware'=>'guest'],function()
 
 Route::group(['middleware'=>'auth'],function()
 {
+    Route::get('/checkout',[CartController::class,'checkout'])->name('checkout');
+    Route::post('/order',[orderController::class,'save'])->name('order');
+    Route::post('/address',[address::class,'save'])->name('address');
     Route::get('/logout',[authController::class,'logout'])->name('logout');
     Route::get('/myprofile',[authController::class,'myprofile'])->name('myprofile');
     Route::get('/changePassword',[authController::class,'changePassword'])->name('changePassword');

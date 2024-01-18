@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\address;
 use App\Models\product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
@@ -64,7 +66,7 @@ class CartController extends Controller
     {
 
         $info=Cart::get($data->id);
-
+      
         $pr=product::find($info->id);
         $no_qty = null; 
 
@@ -105,5 +107,19 @@ class CartController extends Controller
         'subtotal'=>Cart::subtotal(),
         'total'=>Cart::total(),
     ]);
+    }
+
+    function checkout()
+    {
+    
+        if(Cart::count()==0)
+        {
+            return redirect()->route('cart');
+
+        }
+
+        $address=address::where('user_id',Auth::id())->get();
+        
+        return view('home.checkout',compact('address'));
     }
 }

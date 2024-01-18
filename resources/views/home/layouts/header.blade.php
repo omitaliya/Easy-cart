@@ -122,7 +122,10 @@
 				</div>
 				<div class="right-nav py-0">
 					<a href="{{ route('cart') }}" class="ml-3 d-flex pt-2">
-						<i class="fas fa-shopping-cart text-primary"></i>
+						<i class="fas fa-shopping-cart text-primary"><span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">
+							{{ Cart::content()->count() }}
+						</span></i>
+						
 					</a>
 				</div>
 			</nav>
