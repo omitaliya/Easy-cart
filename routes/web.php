@@ -14,6 +14,7 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\brandController;
 use App\Http\Controllers\admin\productController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\discountController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
@@ -101,9 +102,18 @@ Route::group(['prefix'=>'admin'],function()
             Route::post('product-store',[productController::class,'store'])->name('product.store');
             Route::get('product-delete/{id}',[productController::class,'delete'])->name('product.delete');
             Route::get('product-delete-image/{id}',[productController::class,'deleteImage'])->name('product.deleteImage');
+            
+            Route::get('discount-index',[discountController::class,'index'])->name('discount.index');
+            Route::get('discount-create',[discountController::class,'create'])->name('discount.create');
+            Route::post('discount-store',[discountController::class,'store'])->name('discount.store');
+            Route::get('discount-edit/{id}',[discountController::class,'edit'])->name('discount.edit');
+            Route::post('discount-update/{id}',[discountController::class,'update'])->name('discount.update');
+            Route::get('discount-delete/{id}',[discountController::class,'delete'])->name('discount.delete');
+           
+           
            
             Route::get('getSlug',function(Request $request){
-                $slug='';
+            $slug='';
 
                 if(!empty($request->title))
                 {

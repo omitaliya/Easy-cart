@@ -23,9 +23,12 @@ function brand()
     return brand::where('status',1)->orderBy('name','ASC')->get();
 }
 
-function product()
-{
-    return product::with('images')->where('status',1)->orderBy('title','ASC')->paginate(8);
-}
 
+function formateDate($date)
+{
+                if ($date === null) {
+                    return null;
+                }
+    return date('d-M-Y h:i A',strtotime($date));
+}
 ?>
