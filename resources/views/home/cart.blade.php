@@ -86,17 +86,13 @@
                         </div>
                         <div class="d-flex justify-content-between summery-end">
                             <div>Total</div>
-                            <div><p id="total">{{ '₹'.Cart::total() }}</p></div>
+                            <div><p id="total">{{ '₹'.Cart::subtotal() }}</p></div>
                         </div>
                         <div class="pt-5">
                             <a href="{{ route('checkout') }}" class="btn-dark btn btn-block w-100">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>     
-                {{-- <div class="input-group apply-coupan mt-4">
-                    <input type="text" placeholder="Coupon Code" class="form-control">
-                    <button class="btn btn-dark" type="button" id="button-addon2">Apply Coupon</button>
-                </div>  --}}
             </div>
             @else
             <div class="row">

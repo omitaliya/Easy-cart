@@ -14,16 +14,45 @@ class orderController extends Controller
 {
     function save(Request $data)
     {
+        $percentAmount=0;
+        $newAmount=0;
+        $did=null;
+        
         $address_id=address::where('user_id',Auth::id())->pluck('id')->first();
+
+        if(session()->has('code'))
+        {
+            $code=session()->get('code');
+            $did=$code->id;
+
+            if($code->type=='percent')
+            {
+                $subTotal = str_replace(',', '', Cart::subtotal()); 
+                $percentAmount = ($code->discount_amount / 100) * floatval($subTotal);
+                $newAmount = floatval($subTotal) - $percentAmount;
+                
+            }elseif($code->type=='fixed')
+            {
+                $subTotal = str_replace(',', '', Cart::subtotal());
+                $percentAmount = $code->discount_amount;
+                $newAmount = floatval($subTotal) - $code->discount_amount;
+                
+            }
+
+        }
 
         if($data->payment=='cod')
         {
+           
+
             $order=new order;
 
             $order->date=now();
-            $order->total=str_replace(',', '', Cart::subtotal());
+            $order->total = ($newAmount !== 0) ? $newAmount : str_replace(',', '', Cart::subtotal());
             $order->status='Pending';
             $order->user_id=Auth::id();
+            $order->discount_id=$did;
+            $order->damount=$percentAmount;
             $order->payment_method=$data->payment;
             $order->addresses_id=$address_id;
             $order->save();
@@ -42,15 +71,20 @@ class orderController extends Controller
                 
             }
             Cart::destroy();
+            session()->forget('code');
 
                 message('success','Order Placed Successfully!');
 
                 return response()->json([
-                    'status'=>true
+                    'status'=>true,
+                    'percentAmount'=>$percentAmount,
+                    'newAmount'=>$newAmount
                 ]);
         }else
         {
             echo 'online payment';
         }
+
     }
+
 }

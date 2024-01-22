@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\order;
 use App\Models\address;
 use App\Models\product;
+use App\Models\discount;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -122,4 +124,82 @@ class CartController extends Controller
         
         return view('home.checkout',compact('address'));
     }
+
+    function applyCoupon(Request $data)
+    {
+        $subTotal = str_replace(',', '', Cart::subtotal()); 
+
+        $code=discount::where('code',$data->code)->first();
+        if($code!=null)
+        {
+            $max_uses=order::where('discount_id',$code->id)->count();
+            $max_uses_user=order::where(['discount_id'=>$code->id, 'user_id'=>Auth::id()])->count();
+        }
+
+        $total=0;
+        $damount=0;
+
+        if($code==null)
+        {
+            $status=false;
+            $message='Coupon not found';
+        }
+        elseif($code->expires_at<=now())
+        {
+            $status=false;
+            $message='Coupon expired';
+        }
+        elseif($max_uses >= $code->max_uses)
+        {
+            $status=false;
+            $message='Coupon max uses exceeded';
+        }
+        elseif($max_uses_user >= $code->max_uses_user)
+        {
+            $status=false;
+            $message='You have used this coupon';
+        }
+        elseif($subTotal < $code->min_amount)
+        {
+            $status=false;
+            $message='Your minimum total should be ₹'.$code->min_amount;
+        }else
+        {
+                session()->put('code',$code);
+
+              
+
+                if($code->type=='percent')
+                {
+                    
+                    $percentAmount = ($code->discount_amount / 100) * floatval($subTotal);
+                    $newAmount = floatval($subTotal) - $percentAmount;
+                    
+                    
+    
+                }elseif($code->type=='fixed')
+                {
+                    $percentAmount = $code->discount_amount;
+                    $newAmount = floatval($subTotal) - $code->discount_amount;
+                    
+                }
+                  
+                $status=true;
+                $message=$newAmount;
+                $total=$newAmount;
+                $damount=$percentAmount;
+
+        }
+
+
+        return response()->json([
+            'status'=>$status,
+            'message'=>$message,
+            'total'=>$total,
+            'damount'=>$damount,
+        ]);
+
+     
+    }
+
 }

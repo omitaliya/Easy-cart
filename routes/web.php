@@ -52,6 +52,7 @@ Route::group(['prefix'=>'account','middleware'=>'guest'],function()
 Route::group(['middleware'=>'auth'],function()
 {
     Route::get('/checkout',[CartController::class,'checkout'])->name('checkout');
+    Route::post('/applyCoupon',[CartController::class,'applyCoupon'])->name('applyCoupon');
     Route::post('/order',[orderController::class,'save'])->name('order');
     Route::post('/address',[address::class,'save'])->name('address');
     Route::get('/logout',[authController::class,'logout'])->name('logout');

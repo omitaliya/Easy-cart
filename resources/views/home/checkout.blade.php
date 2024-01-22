@@ -6,8 +6,8 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a class="white-text" href="#">Shop</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{ route('shop') }}">Shop</a></li>
                     <li class="breadcrumb-item">Checkout</li>
                 </ol>
             </div>
@@ -176,20 +176,30 @@
                               
                           <div class="d-flex justify-content-between pb-2">
                               <div class="h6">{{ $c->name }}</div>
-                              <div class="h6">{{ '₹'.$c->price }}</div>
+                              <div class="h6">{{ '₹'.$c->price }}<small>x{{ $c->qty }}</small></div>
                           </div>
                           @endforeach
                             
+                            <div class="d-flex justify-content-between mt-2">
+                                <div class="h6"><strong>Discount</strong></div>
+                                <div class="h6"><strong> <p id="discount">₹0</p> </strong></div>
+                            </div>
                             <div class="d-flex justify-content-between mt-2">
                                 <div class="h6"><strong>Shipping</strong></div>
                                 <div class="h6"><strong>₹0</strong></div>
                             </div>
                             <div class="d-flex justify-content-between mt-2 summery-end">
                                 <div class="h5"><strong>Total</strong></div>
-                                <div class="h5"><strong>{{ '₹'.Cart::subtotal() }}</strong></div>
-                            </div>                            
+                                <div class="h5"><strong><p id="total">₹{{ Cart::subtotal() }}</p></strong></div>
+                            </div>  
                         </div>
                     </div>   
+
+                            <div class="input-group apply-coupan mt-4">
+                <input type="text" placeholder="Coupon Code" id="coupon_code" class="form-control">
+                <button class="btn btn-dark" type="submit" id="applyCoupon">Apply Coupon</button>
+            </div>                           
+            <p id="error" class="mt-2 ml-2 font-weight-bolder text-danger"></p>
                     
                     
                     <div class="card payment-form ">  
@@ -246,6 +256,40 @@
 
 @section('js')
     <script>
+
+
+
+        $("#applyCoupon").click(function(e)
+        {
+            e.preventDefault();
+
+
+            var coupon_code=$("#coupon_code").val();
+
+            $.ajax({
+                type: "post",
+                url: "{{ route('applyCoupon') }}",
+                data:{'code':coupon_code,'_token': '{{ csrf_token() }}'},
+                dataType: "json",
+                success: function (r) {
+                    if(r.status==true)
+                    {
+                        $("#error").text('');
+                        var total = parseFloat(r.total);
+                        $('#total').text('₹'+total.toFixed(2));
+
+                        var discountAmount = parseFloat(r.damount);
+                        $('#discount').text('-₹' + discountAmount.toFixed(2));
+
+
+                    }else if(r.status==false)
+                    {
+                        $("#error").text('');
+                        $("#error").text(r.message);
+                    }
+                }
+            });
+        })
 
         $('#orderForm').submit(function(e) {
             e.preventDefault();
