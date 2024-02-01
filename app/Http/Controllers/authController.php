@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\order_status;
 use App\Models\User;
+use App\Models\order;
+use App\Models\order_items;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +30,22 @@ class authController extends Controller
     function myprofile()
     {
         return view('home.account.myprofile');
+    }
+
+    function myorder()
+    {
+        $order=order::where('user_id',Auth::id())->latest()->get();
+        return view('home.account.myorder',compact('order'));
+    }
+
+    function orderDetail($id)
+    {
+        $order=order::with('discount')->find($id);
+        $os=order_status::where('order_id',$id)->latest()->first();
+        $order_items=order_items::with('order','product')->where('order_id',$id)->get();
+        $count=order_items::where('order_id',$id)->count();
+
+        return view('home.account.orderDetail',compact('os','order','order_items','count'));
     }
 
     function changePassword()

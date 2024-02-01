@@ -16,6 +16,7 @@ use App\Http\Controllers\admin\productController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\discountController;
 use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\homeController as home_page;
@@ -31,6 +32,7 @@ use App\Http\Controllers\productController as product_home;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::get('/',[home_page::class,'index'])->name('home');
 
@@ -57,6 +59,8 @@ Route::group(['middleware'=>'auth'],function()
     Route::post('/address',[address::class,'save'])->name('address');
     Route::get('/logout',[authController::class,'logout'])->name('logout');
     Route::get('/myprofile',[authController::class,'myprofile'])->name('myprofile');
+    Route::get('/myorder',[authController::class,'myorder'])->name('myorder');
+    Route::get('/order-detail/{id}',[authController::class,'orderDetail'])->name('order.detail');
     Route::get('/changePassword',[authController::class,'changePassword'])->name('changePassword');
 });
 
@@ -110,8 +114,11 @@ Route::group(['prefix'=>'admin'],function()
             Route::get('discount-edit/{id}',[discountController::class,'edit'])->name('discount.edit');
             Route::post('discount-update/{id}',[discountController::class,'update'])->name('discount.update');
             Route::get('discount-delete/{id}',[discountController::class,'delete'])->name('discount.delete');
-           
-           
+            
+            Route::get('order-list',[AdminOrderController::class,'index'])->name('order.index');
+            Route::get('order-details/{id}',[AdminOrderController::class,'orderDetail'])->name('adminOrder.detail');
+            Route::post('order_status',[AdminOrderController::class,'order_status'])->name('order_status');
+            
            
             Route::get('getSlug',function(Request $request){
             $slug='';

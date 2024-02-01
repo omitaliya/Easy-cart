@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\order;
 use App\Models\address;
 use App\Models\order_items;
+use App\Models\order_status;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,6 @@ class orderController extends Controller
 
             $order->date=now();
             $order->total = ($newAmount !== 0) ? $newAmount : str_replace(',', '', Cart::subtotal());
-            $order->status='Pending';
             $order->user_id=Auth::id();
             $order->discount_id=$did;
             $order->damount=$percentAmount;
@@ -70,6 +70,15 @@ class orderController extends Controller
                 $order_item->save();
                 
             }
+
+            $os=new order_status;
+            $os->name='Pending';
+            $os->date=now();
+            $os->order_id=$order->id;
+            $os->save();
+
+            orderEmail($order->id);
+
             Cart::destroy();
             session()->forget('code');
 
