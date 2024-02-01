@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\order;
 use App\Models\address;
+use App\Models\product;
 use App\Models\order_items;
 use App\Models\order_status;
 use Illuminate\Http\Request;
@@ -68,8 +69,16 @@ class orderController extends Controller
                 $order_item->price=$item->price;
 
                 $order_item->save();
-                
-            }
+
+                $product=product::find($item->id);
+
+                if($product->track_qty==1)
+                {
+                $newQty=$product->qty-$item->qty;
+                $product->qty=$newQty;
+                $product->save();
+                }
+                }
 
             $os=new order_status;
             $os->name='Pending';
@@ -97,3 +106,4 @@ class orderController extends Controller
     }
 
 }
+

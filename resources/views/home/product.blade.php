@@ -57,8 +57,23 @@
                         <h2 class="price ">{{ '₹'.$product->price }}</h2>
 
                         <p>{{ $product->description }}</p>
-                        <a href="cart.php" class="btn btn-dark"><i class="fas fa-shopping-cart"></i> &nbsp;ADD TO
-                            CART</a>
+                        @if ($product->track_qty==1)
+                        @if ($product->qty<=0)
+                        
+                        <button class="btn btn-dark"><i class="fas fa-shopping-cart"></i> &nbsp;Out Of Stock</button>
+                        @else
+                        <a class="btn btn-dark" href="javascript:void(0)"
+                                onclick="addToCart({{ $product->id }})">
+                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                </a>
+                        @endif
+                    @else
+                        
+                    <a class="btn btn-dark" href="javascript:void(0)"
+                                onclick="addToCart({{ $product->id }})">
+                                    <i class="fa fa-shopping-cart"></i> Add To Cart
+                                </a>
+                    @endif
                     </div>
                 </div>
 

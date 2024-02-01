@@ -60,7 +60,7 @@
                                 
                                 <td><img src="{{ asset('storage/'.$pr->images->first()->path) }}" class="img-thumbnail" width="50" ></td>
                                
-                                <td><a href="#">{{ $pr->title }}</a></td>
+                                <td><a href="{{ route('product.edit',$pr->id) }}">{{ $pr->title }}</a></td>
                                 
                                 <td>{{ $pr->compare_price ?? $pr->price}}</td>
                                 

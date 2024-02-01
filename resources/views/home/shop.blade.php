@@ -144,37 +144,53 @@
                                             src="{{ asset('storage/'.$pr->images->first()->path) }}" alt=""></a>
                                     <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
 
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="javascript:void(0)"
-                                            onclick="addToCart({{ $pr->id }})">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>
-                                    </div>
+                                    @if ($pr->track_qty==1)
+                                    @if ($pr->qty<=0) <div class="product-action">
+                                        <button class="btn btn-dark"> Out Of Stock
+                                        </button>
                                 </div>
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="{{ route('product',$pr->id) }}">{{ $pr->title }}</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>{{ '₹'.$pr->price }}</strong></span>
-                                        <span class="h6 text-underline text-danger"><del>{{ ($pr->compare_price!=null) ?
-                                                '₹'.$pr->compare_price :''
-                                                }}</del></span>
-                                    </div>
+                                @else
+                                <div class="product-action">
+                                    <a class="btn btn-dark" href="javascript:void(0)"
+                                        onclick="addToCart({{ $pr->id }})">
+                                        <i class="fa fa-shopping-cart"></i> Add To Cart
+                                    </a>
+                                </div>
+                                @endif
+                                @else
+
+                                <div class="product-action">
+                                    <a class="btn btn-dark" href="javascript:void(0)"
+                                        onclick="addToCart({{ $pr->id }})">
+                                        <i class="fa fa-shopping-cart"></i> Add To Cart
+                                    </a>
+                                </div>
+                                @endif
+                            </div>
+                            <div class="card-body text-center mt-3">
+                                <a class="h6 link" href="{{ route('product',$pr->id) }}">{{ $pr->title }}</a>
+                                <div class="price mt-2">
+                                    <span class="h5"><strong>{{ '₹'.$pr->price }}</strong></span>
+                                    <span class="h6 text-underline text-danger"><del>{{ ($pr->compare_price!=null) ?
+                                            '₹'.$pr->compare_price :''
+                                            }}</del></span>
                                 </div>
                             </div>
                         </div>
-                        @empty
-                        @endforelse
-                        <h3 class="no-product"></h3>
+                    </div>
+                    @empty
+                    @endforelse
+                    <h3 class="no-product"></h3>
 
-                        <div class="col-md-12 pt-5">
-                            <nav aria-label="Page navigation example">
-                                {{ $product->links() }}
+                    <div class="col-md-12 pt-5">
+                        <nav aria-label="Page navigation example">
+                            {{ $product->links() }}
 
-                            </nav>
-                        </div>
+                        </nav>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -186,11 +202,16 @@
 @section('js')
 
 <script>
-   
-$("#sort").change(function(){
+    $("#sort").change(function(){
 
         var url='{{ url()->current() }}?';
         url+='&sort='+$(this).val();
+
+        var keyword=$("#search").val();
+        if(keyword.length>0)
+        {
+          url+='&search='+keyword;  
+        }
         window.location.href =url;
 });
 
@@ -198,7 +219,7 @@ $("#sort").change(function(){
    
  function getBrand(){
 
-var brands=[];
+        var brands=[];
 
 $(".brand").each(function(){
     if($(this).is(':checked')==true)

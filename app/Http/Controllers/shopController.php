@@ -28,6 +28,11 @@ class shopController extends Controller
             
         }
 
+        if((!empty($req->get('search'))))
+        {
+            $product=$product->where('title','like','%'.$req->get('search').'%');
+        }
+
         
         if ($req->ajax()) {
             if(!empty($selected_brands))
@@ -45,6 +50,8 @@ class shopController extends Controller
                 ]);
             }
       }
+
+     
 
       if (!empty($req->sort)) {
         switch ($req->sort) {
@@ -72,6 +79,8 @@ class shopController extends Controller
             $selected_sub_category=$sub_cat->id;
 
         }
+
+       
 
 
         $product=$product->with('images')->where('status',1)->orderBy('title','ASC')->paginate(6);
