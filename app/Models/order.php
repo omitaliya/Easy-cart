@@ -28,5 +28,8 @@ class order extends Model
         return $this->belongsTo(address::class,'addresses_id','id');
     }
 
-  
+    public function orderStatus()
+    {
+        return $this->hasMany(order_status::class,'order_id','id');
+    }
 }

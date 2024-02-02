@@ -13,12 +13,14 @@ use App\Http\Controllers\productSubCategory;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\brandController;
 use App\Http\Controllers\admin\productController;
+use App\Http\Controllers\admin\settingController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\discountController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\forgotPasswordController;
 use App\Http\Controllers\homeController as home_page;
 use App\Http\Controllers\productController as product_home;
 
@@ -49,6 +51,11 @@ Route::group(['prefix'=>'account','middleware'=>'guest'],function()
     Route::post('/registerData',[authController::class,'registerData'])->name('registerData');
     Route::get('/login',[authController::class,'login'])->name('login');
     Route::post('/login/user',[authController::class,'loginUser'])->name('login.user');
+    
+    Route::get('/forgot-password',[forgotPasswordController::class,'forgotPasswordForm'])->name('forgotPasswordForm');
+    Route::post('/process-forgot-password',[forgotPasswordController::class,'forgotPassword'])->name('forgotPassword');
+    Route::get('/reset-password/{token}',[forgotPasswordController::class,'resetPasswordForm'])->name('resetPasswordForm');
+    Route::post('/reset-password/',[forgotPasswordController::class,'resetPassword'])->name('resetPassword');
 });
 
 Route::group(['middleware'=>'auth'],function()
@@ -121,6 +128,8 @@ Route::group(['prefix'=>'admin'],function()
             Route::get('order-details/{id}',[AdminOrderController::class,'orderDetail'])->name('adminOrder.detail');
             Route::post('order_status',[AdminOrderController::class,'order_status'])->name('order_status');
             
+            Route::get('change-password',[settingController::class,'changePasswordForm'])->name('admin.changePasswordForm');
+            Route::post('save-change-password',[settingController::class,'saveChangedPassword'])->name('admin.saveChangedPassword');
            
             Route::get('getSlug',function(Request $request){
             $slug='';

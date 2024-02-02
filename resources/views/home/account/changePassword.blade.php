@@ -85,6 +85,7 @@
                         {
                             $("#profile_message").removeClass('text-danger');
                             $("#profile_message").addClass('text-success').text(r.message);
+                            $("#changePassword")[0].reset();
                         }
                     }else
                     {

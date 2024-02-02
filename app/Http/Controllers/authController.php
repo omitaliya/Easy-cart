@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\resetPasswordEmail;
 use App\Models\User;
 use App\Models\order;
 use App\Models\order_items;
+use Illuminate\Support\Str;
 use App\Models\order_status;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class authController extends Controller
 {
@@ -136,6 +141,8 @@ class authController extends Controller
     {
         return view('home.account.changePassword');
     }
+
+
 
     function loginUser(Request $data)
     {
