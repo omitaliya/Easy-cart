@@ -59,9 +59,11 @@ Route::group(['middleware'=>'auth'],function()
     Route::post('/address',[address::class,'save'])->name('address');
     Route::get('/logout',[authController::class,'logout'])->name('logout');
     Route::get('/myprofile',[authController::class,'myprofile'])->name('myprofile');
+    Route::post('/update_profile',[authController::class,'update_profile'])->name('update_profile');
     Route::get('/myorder',[authController::class,'myorder'])->name('myorder');
     Route::get('/order-detail/{id}',[authController::class,'orderDetail'])->name('order.detail');
     Route::get('/changePassword',[authController::class,'changePassword'])->name('changePassword');
+    Route::post('/storeChangedPassword',[authController::class,'storeChangedPassword'])->name('storeChangedPassword');
 });
 
 Route::group(['prefix'=>'admin'],function()

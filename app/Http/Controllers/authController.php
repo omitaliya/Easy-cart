@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\order_status;
 use App\Models\User;
 use App\Models\order;
 use App\Models\order_items;
+use App\Models\order_status;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class authController extends Controller
@@ -31,6 +33,88 @@ class authController extends Controller
     {
         return view('home.account.myprofile');
     }
+
+    function update_profile(Request $data)
+    {
+        $validator=Validator::make($data->all(),[
+            'name'=>'required',
+            'email'=>'required|email|unique:users,email,'.auth()->id().',id',
+             'phone'=>'required|numeric|digits:10',
+        ]);
+
+        if($validator->passes())
+        {
+
+            $user=user::find(auth()->id());
+
+            $user->update([
+                'name'=>$data->name,
+                'email'=>$data->email,
+                'phone'=>$data->phone,
+            ]);
+
+            return response()->json([
+                'status'=>true,
+                'message'=>'Profile Updated!'
+
+        ]);
+
+        }else
+    {
+        return response()->json([
+                'status'=>false,
+                'errors'=>$validator->errors()
+
+        ]);
+    }
+    }
+
+    function storeChangedPassword(Request $data)
+    {
+        $validator=Validator::make($data->all(),[
+            'old_password'=>'required',
+            'new_password'=>'required|min:4|max:32',
+            'confirm_password'=>'required|same:new_password',
+        ]);
+
+        if($validator->passes())
+        {
+
+            if(!Hash::check($data->old_password,Auth::user()->password))
+            {
+                $status=true;
+                $RoW='W';
+                $message='Old password is invalid!';
+            }else
+            {
+                $user=user::find(auth()->id());
+    
+                $user->update([
+                    'password'=>bcrypt($data->new_password)
+                ]);
+
+                $status=true;
+                $message='Password Updated!';
+                $RoW='R';
+
+            }
+
+            return response()->json([
+                'status'=>$status,
+                'message'=>$message,
+                'RoW'=>$RoW
+
+        ]);
+
+        }else
+            {
+                return response()->json([
+                        'status'=>false,
+                        'errors'=>$validator->errors()
+
+                ]);
+            }
+}
 
     function myorder()
     {
