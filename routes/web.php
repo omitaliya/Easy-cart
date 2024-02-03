@@ -9,6 +9,7 @@ use App\Http\Controllers\authController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\shopController;
 use App\Http\Controllers\orderController;
+use App\Http\Controllers\ratingController;
 use App\Http\Controllers\productSubCategory;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\brandController;
@@ -16,11 +17,11 @@ use App\Http\Controllers\admin\productController;
 use App\Http\Controllers\admin\settingController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\discountController;
+use App\Http\Controllers\forgotPasswordController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AdminOrderController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\SubCategoryController;
-use App\Http\Controllers\forgotPasswordController;
 use App\Http\Controllers\homeController as home_page;
 use App\Http\Controllers\productController as product_home;
 
@@ -71,6 +72,7 @@ Route::group(['middleware'=>'auth'],function()
     Route::get('/order-detail/{id}',[authController::class,'orderDetail'])->name('order.detail');
     Route::get('/changePassword',[authController::class,'changePassword'])->name('changePassword');
     Route::post('/storeChangedPassword',[authController::class,'storeChangedPassword'])->name('storeChangedPassword');
+    Route::post('/saveRating',[ratingController::class,'saveRating'])->name('saveRating');
 });
 
 Route::group(['prefix'=>'admin'],function()

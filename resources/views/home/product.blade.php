@@ -42,14 +42,24 @@
                     <div class="bg-light right">
                         <h1>{{ $product->title }}</h1>
                         <div class="d-flex mb-3">
-                            <div class="text-primary mr-2">
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star-half-alt"></small>
-                                <small class="far fa-star"></small>
-                            </div>
-                            <small class="pt-1">(99 Reviews)</small>
+                            <div class="star-rating product mt-2" title="">
+                                <div class="back-stars">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    
+                                    <div class="front-stars" style="width: {{ $avg_rating_percentage }}%">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div> 
+                            <small class="pt-2 ps-1">({{ $total_rating }} Reviews)</small>
                         </div>
                         <h2 class="price text-secondary"><del>{{ ($product->compare_price!=null) ?
                                 '₹'.$product->compare_price :''
@@ -81,7 +91,7 @@
                     <div class="bg-light">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                                <button class="nav-link" id="description-tab" data-bs-toggle="tab"
                                     data-bs-target="#description" type="button" role="tab" aria-controls="description"
                                     aria-selected="true">Description</button>
                             </li>
@@ -91,18 +101,19 @@
                                     aria-selected="false">Shipping & Returns</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                                <button class="nav-link active" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
                                     type="button" role="tab" aria-controls="reviews"
                                     aria-selected="false">Reviews</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="description" role="tabpanel"
+                            <div class="tab-pane fade" id="description" role="tabpanel"
                                 aria-labelledby="description-tab">
                                 <p>
                                     {{ $product->description }}
                                 </p>
                             </div>
+
                             <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
                                 <p>
                                     <b> Shipping:</b> Enjoy fast and reliable delivery across India. We strive to
@@ -114,9 +125,111 @@
                                     satisfaction is our priority.
                                 </p>
                             </div>
-                            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
 
+
+                            <div class="tab-pane fade show active" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                               @if (Auth::check())
+                                    @if ($allowed==true)
+
+                                        @if (in_array($product->id,$product_ids))
+                                            
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <form id="ratingForm">
+                                                    @csrf
+                                                <h3 class="h4 pb-3">Write a Review</h3>
+                                                <div class="form-group mb-3">
+                                                    <label for="rating">Rating</label>
+                                                    <br>
+                                                    <div class="rating" id="rating" style="width: 10rem">
+                                                        <input id="rating-5" type="radio" name="rating" value="5"/><label for="rating-5"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input id="rating-4" type="radio" name="rating" value="4"/><label for="rating-4"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input id="rating-3" type="radio" name="rating" value="3"/><label for="rating-3"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input id="rating-2" type="radio" name="rating" value="2"/><label for="rating-2"><i class="fas fa-3x fa-star"></i></label>
+                                                        <input id="rating-1" type="radio" name="rating" value="1"/><label for="rating-1"><i class="fas fa-3x fa-star"></i></label>
+                                                   </div> <p></p>
+                                                </div>
+                                                <div class="form-group mb-3">
+                                                    <label for="">How was your overall experience?</label>
+                                                    <textarea name="review"  id="review" class="form-control" cols="30" rows="5" placeholder="How was your overall experience?"></textarea>
+                                                    <p></p></div>
+                                                <div>
+                                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                    <button class="btn btn-dark">Submit</button>
+                                                </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    @endif
+                                   
+                               @endif
+
+                                <div class="col-md-12 mt-3">
+                                    <div class="overall-rating mb-3">
+                                        <div class="d-flex">
+                                            <h1 class="h3 pe-3">{{ number_format($avg_rating,1) }}</h1>
+                                            <div class="star-rating mt-2" title="">
+                                                <div class="back-stars">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    
+                                                    <div class="front-stars" style="width: {{ $avg_rating_percentage }}%">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                            <div class="pt-2 ps-2">({{ $total_rating }} Reviews)</div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    @forelse ($rating as $r)
+
+                                    @php
+                                        $rating_percentage=($r->rating*100)/5;
+                                    @endphp
+                                        
+                                    <div class="rating-group mb-4">
+                                       <span> <strong>{{ $r->user->name }} </strong></span>
+                                        <div class="star-rating mt-2" title="">
+                                            <div class="back-stars">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                
+                                                <div class="front-stars" style="width: {{ $rating_percentage }}%">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                        <div class="my-3">
+                                            <p>{{ $r->comment }}
+    
+                                        </p>
+                                        </div>
+                                    </div>
+                                    @empty
+                                        {{ "Not rating till now!" }}
+                                    @endforelse
+    
+                                   
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -163,4 +276,34 @@
     </section>
 </main>
 
+@endsection
+
+@section('js')
+    <script>
+        $("#ratingForm").submit(function (e) { 
+            e.preventDefault();
+            
+            $.ajax({
+                type: "post",
+                url: "{{ route('saveRating') }}",
+                data: $(this).serializeArray(),
+                dataType: "json",
+                success: function (response) {
+                    if(response.status==true)
+                    {
+                        window.location.href="{{ route('product',$product->id) }}";
+                    }else
+                    {
+                         $('.is-invalid').removeClass('is-invalid');
+                         $('.invalid-feedback').removeClass('invalid-feedback').text('');
+
+                        $.each(response.errors, function (key, value) { 
+                            $('#'+key).addClass('is-invalid').siblings('p').
+                            addClass('invalid-feedback').text(value);
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
