@@ -35,9 +35,6 @@ class productController extends Controller
 
         $rating=product_rating::where('product_id',$id)->with('product','user')->get();
 
-        
-        // dd($avg_rating);
-
         $related = Product::with('images')
             ->where('id', '!=', $id)
             ->where(function ($query) use ($product) {

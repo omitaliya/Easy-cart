@@ -230,7 +230,7 @@
                         <div class="product-image position-relative">
                             <a href="{{ route('product',$fp->id) }}" class="product-img"><img class="card-img-top"
                                     src="{{ asset('storage/'.$fp->images->first()->path) }}" alt=""></a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
+                            <a class="whishlist" href="javascript:void(0)" onclick="addToWishlist({{ $fp->id }})"><i class="far fa-heart"></i></a>
 
                             @if ($fp->track_qty==1)
                             @if ($fp->qty<=0)
@@ -287,8 +287,8 @@
                         <div class="product-image position-relative">
                             <a href="{{ route('product',$lp->id) }}" class="product-img"><img class="card-img-top"
                                     src="{{ asset('storage/'.$lp->images->first()->path) }}" alt=""></a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
+                            <a class="whishlist" href="javascript:void(0)" onclick="addToWishlist({{ $lp->id }})"><i class="far fa-heart"></i></a>
+                            
                             @if ($lp->track_qty==1)
                             @if ($lp->qty<=0) <div class="product-action">
                                 <button class="btn btn-dark"> Out Of Stock

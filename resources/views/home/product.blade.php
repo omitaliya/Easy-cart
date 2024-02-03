@@ -250,7 +250,7 @@
                         <div class="product-image position-relative">
                             <a href="{{ route('product',$rp->id) }}" class="product-img"><img class="card-img-top"
                                     src="{{ asset('storage/'.$rp->images->first()->path) }}" alt=""></a>
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
+                            <a class="whishlist" href="javascript:void(0)" onclick="addToWishlist({{ $rp->id }})"><i class="far fa-heart"></i></a>
 
                             <div class="product-action">
                                 <a class="btn btn-dark" href="#">

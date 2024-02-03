@@ -142,7 +142,7 @@
                                     <a href="{{ route('product',$pr->id) }}" class="product-img"><img
                                             class="card-img-top"
                                             src="{{ asset('storage/'.$pr->images->first()->path) }}" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
+                                    <a class="whishlist" href="javascript:void(0)" onclick="addToWishlist({{ $pr->id }})"><i class="far fa-heart"></i></a>
 
                                     @if ($pr->track_qty==1)
                                     @if ($pr->qty<=0) <div class="product-action">

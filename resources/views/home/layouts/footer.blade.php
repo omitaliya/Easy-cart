@@ -94,6 +94,26 @@ function addToCart(id)
             }
         });
     }
+
+		function addToWishlist(id)
+    {
+        $.ajax({
+            type: "post",
+            url: "{{ route('addToWishlist') }}",
+            data: {'id': id, '_token': '{{ csrf_token() }}'},
+            dataType: "json",
+            success: function (r) {
+							if(r.status==true)
+							{
+
+								alert(r.message); 
+							}else
+							{
+								window.location.href="{{ route('login') }}";
+							}
+            }
+        });
+    }
 </script>
 @yield('js')
 </body>

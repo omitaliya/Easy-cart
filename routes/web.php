@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WishlistController;
 use App\Models\brand;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -45,6 +46,7 @@ Route::post('/addToCart',[CartController::class,'addToCart'])->name('addToCart')
 Route::get('/cart',[CartController::class,'cart'])->name('cart');
 Route::post('/updateCart',[CartController::class,'updateCart'])->name('updateCart');
 Route::post('/deleteCart',[CartController::class,'deleteCart'])->name('deleteCart');
+Route::post('/addToWishlist',[WishlistController::class,'addToWishlist'])->name('addToWishlist');
 
 Route::group(['prefix'=>'account','middleware'=>'guest'],function()
 {
@@ -73,6 +75,9 @@ Route::group(['middleware'=>'auth'],function()
     Route::get('/changePassword',[authController::class,'changePassword'])->name('changePassword');
     Route::post('/storeChangedPassword',[authController::class,'storeChangedPassword'])->name('storeChangedPassword');
     Route::post('/saveRating',[ratingController::class,'saveRating'])->name('saveRating');
+    Route::get('/WishList',[WishlistController::class,'index'])->name('WishList');
+    Route::get('/removeProduct/{id}',[WishlistController::class,'removeProduct'])->name('removeProduct');
+    
 });
 
 Route::group(['prefix'=>'admin'],function()
