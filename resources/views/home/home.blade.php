@@ -20,7 +20,7 @@
                             <h1 class="display-4 text-white mb-3">Kids Fashion</h1>
                             <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet
                                 amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('shop','kids-wear') }}">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -34,10 +34,10 @@
 
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Womens Fashion</h1>
+                            <h1 class="display-4 text-white mb-3">Mens Fashion</h1>
                             <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet
                                 amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('shop','mens-fashion') }}">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -52,10 +52,10 @@
 
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Shop Online at Flat 70% off on Branded Clothes</h1>
+                            <h1 class="display-4 text-white mb-3">Womens Fashion</h1>
                             <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet
                                 amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{ route('shop','womens-fashion') }}">Shop Now</a>
                         </div>
                     </div>
                 </div>
@@ -108,110 +108,27 @@
                 <h2>Categories</h2>
             </div>
             <div class="row pb-3">
+                @forelse ($categories as $cat)
+                    
                 <div class="col-lg-3">
-                    <div class="cat-card">
+                    <a href="{{ route('shop',$cat->slug) }}" style="color: #000000">  
+                        <div class="cat-card">
                         <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
+                            <img src="{{ asset('home/images/category.jpg') }}" alt="" class="img-fluid">
                         </div>
                         <div class="right">
                             <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
+                                <h2>{{ $cat->name }}</h2>
+                
+                                <p class="text-muted">{{ $cat->product_count }} Products</p>
                             </div>
                         </div>
                     </div>
+                </a>
                 </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('home/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                    {{ "No Category Found!" }}
+                @endforelse
             </div>
         </div>
     </section>
