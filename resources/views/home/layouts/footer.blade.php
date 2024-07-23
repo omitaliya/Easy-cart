@@ -4,10 +4,10 @@
 			<div class="col-md-4">
 				<div class="footer-card">
 					<h3>Get In Touch</h3>
-					<p>No dolore ipsum accusam no lorem. <br>
-						123 Street, New York, USA <br>
-						exampl@example.com <br>
-						000 000 0000</p>
+					<p> A-12 New Takshshila  <br>
+						Iscon cross way  <br>
+						fackmail12@gmail.com <br>
+						+91 832087****</p>
 				</div>
 			</div>
 
@@ -49,7 +49,7 @@
 			<div class="row">
 				<div class="col-12 mt-3">
 					<div class="copy-right text-center">
-						<p>© Copyright 2023 QuickCart. All Rights Reserved</p>
+						<p>© Copyright 2024 EasyCart. All Rights Reserved</p>
 					</div>
 				</div>
 			</div>

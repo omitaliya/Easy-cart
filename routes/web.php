@@ -41,24 +41,36 @@ use App\Http\Controllers\productController as product_home;
 Route::get('/',[home_page::class,'index'])->name('home');
 
 Route::get('/shop/{CategorySlug?}/{SubCategorySlug?}',[shopController::class,'index'])->name('shop');
+
 Route::get('/product/{id}',[product_home::class,'index'])->name('product');
+
 Route::post('/addToCart',[CartController::class,'addToCart'])->name('addToCart');
-Route::get('/cart',[CartController::class,'cart'])->name('cart');
+
+ Route::get('/cart',[CartController::class,'cart'])->name('cart');
+
 Route::post('/updateCart',[CartController::class,'updateCart'])->name('updateCart');
+
 Route::post('/deleteCart',[CartController::class,'deleteCart'])->name('deleteCart');
+
 Route::post('/addToWishlist',[WishlistController::class,'addToWishlist'])->name('addToWishlist');
 
 Route::group(['prefix'=>'account','middleware'=>'guest'],function()
 {
     Route::get('/register',[authController::class,'registration'])->name('register');
+
     Route::post('/registerData',[authController::class,'registerData'])->name('registerData');
+
     Route::get('/login',[authController::class,'login'])->name('login');
+
     Route::post('/login/user',[authController::class,'loginUser'])->name('login.user');
     
-    Route::get('/forgot-password',[forgotPasswordController::class,'forgotPasswordForm'])->name('forgotPasswordForm');
-    Route::post('/process-forgot-password',[forgotPasswordController::class,'forgotPassword'])->name('forgotPassword');
-    Route::get('/reset-password/{token}',[forgotPasswordController::class,'resetPasswordForm'])->name('resetPasswordForm');
-    Route::post('/reset-password/',[forgotPasswordController::class,'resetPassword'])->name('resetPassword');
+    #Route::get('/forgot-password',[forgotPasswordController::class,'forgotPasswordForm'])->name('forgotPasswordForm');
+
+    #Route::post('/process-forgot-password',[forgotPasswordController::class,'forgotPassword'])->name('forgotPassword');
+
+    #Route::get('/reset-password/{token}',[forgotPasswordController::class,'resetPasswordForm'])->name('resetPasswordForm');
+
+   # Route::post('/reset-password/',[forgotPasswordController::class,'resetPassword'])->name('resetPassword');
 });
 
 Route::group(['middleware'=>'auth'],function()

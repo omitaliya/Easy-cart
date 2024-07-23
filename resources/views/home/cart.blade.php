@@ -27,7 +27,9 @@
                             <tr>
                                 <th>Item</th>
                                 <th>Price</th>
+                              
                                 <th>Quantity</th>
+                                
                                 <th>Total</th>
                                 <th>Remove</th>
                             </tr>
@@ -47,13 +49,18 @@
                                   <div class="input-group quantity mx-auto" style="width: 100px;">
                                       <div class="input-group-btn">
                                           <button data-id="{{ $c->rowId }}" class="sub btn btn-sm btn-dark btn-minus p-2 pt-1 pb-1">
-                                              <i class="fa fa-minus"></i>
+                                                  <!-- <i class="fa fa-minus"> -->
+
+                                </i>-
                                           </button>
                                       </div>
                                       <input type="text" class="form-control form-control-sm  border-0 text-center" value="{{ $c->qty }}">
+
                                       <div class="input-group-btn">
                                           <button data-id="{{ $c->rowId }}" class="add btn btn-sm btn-dark btn-plus p-2 pt-1 pb-1">
-                                              <i class="fa fa-plus"></i>
+                                              <!-- <i class="fa fa-plus">
+                                                 -->
+                                              </i>+
                                           </button>
                                       </div>
                                   </div>
@@ -62,7 +69,7 @@
                                   {{ '₹'.$c->qty*$c->price }}
                               </td>
                               <td>
-                                  <button onclick="deleteCart('{{ $c->rowId }}')" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+                                  <button onclick="deleteCart('{{ $c->rowId }}')" class="btn btn-sm btn-danger"><i class></i> delete</button>
                               </td>
                           </tr>                               
                         @endforeach
